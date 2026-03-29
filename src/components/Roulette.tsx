@@ -2,12 +2,16 @@ import React, { useState } from 'react';
 import { styles } from './styles';
 import confetti from 'canvas-confetti';
 
-const PRIZES = {
-  "Sticker": { color: '#c3ecf6', prob: 40 },
-  "Remera": { color: '#ffe7a5', prob: 5 },
-  "Creditos": { color: '#f8d8d8', prob: 0.001 },
-  "Termito": { color: '#ccf6c5', prob: 3 }
-};
+const PRIZES = [
+  { name: "Stickers", color: '#c3ecf6', prob: 15 },
+  { name: "Stickers", color: '#ffe7a5', prob: 15 },
+  { name: "Stickers", color: '#f8d8d8', prob: 20 },
+  { name: "Stickers", color: '#ccf6c5', prob: 20 },
+  { name: "Stickers", color: '#c3ecf6', prob: 20 },
+  { name: "Remera", color: '#ffe7a5', prob: 5 },
+  { name: "Creditos", color: '#f8d8d8', prob: 0.5 },
+  { name: "Termito", color: '#ccf6c5', prob: 3 }
+];
 
 const Roulette: React.FC = () => {
 
@@ -23,18 +27,18 @@ const Roulette: React.FC = () => {
     const currentSpinCount = spinCount + 1;
     setSpinCount(currentSpinCount);
 
-    const prizeKeys = Object.keys(PRIZES);
     let winnerIndex = 0;
 
     if (currentSpinCount === 51) {
-      winnerIndex = prizeKeys.indexOf("Termito");
+      winnerIndex = PRIZES.findIndex(p => p.name === "Termito");
     } else {
       const rand = Math.random() * 100;
       let cumulative = 0;
-      for (let i = 0; i < prizeKeys.length; i++) {
-        if (prizeKeys[i] === "Termito") continue;
 
-        cumulative += PRIZES[prizeKeys[i] as keyof typeof PRIZES].prob;
+      for (let i = 0; i < PRIZES.length; i++) {
+        if (PRIZES[i].name === "Termito") continue;
+
+        cumulative += PRIZES[i].prob;
         if (rand <= cumulative) {
           winnerIndex = i;
           break;
@@ -42,7 +46,7 @@ const Roulette: React.FC = () => {
       }
     }
 
-    const sliceAngle = 360 / prizeKeys.length;
+    const sliceAngle = 360 / PRIZES.length;
     const randomOffset = (Math.random() * (sliceAngle * 0.6)) - (sliceAngle * 0.3);
     const targetAngle = 360 - (winnerIndex * sliceAngle + (sliceAngle / 2)) + randomOffset;
     const extraSpins = (Math.floor(Math.random() * 5) + 5) * 360;
@@ -56,7 +60,6 @@ const Roulette: React.FC = () => {
     setTimeout(() => {
       setIsSpinning(false);
 
-      // 🎉 CONFETTI
       confetti({
         particleCount: 120,
         spread: 70,
@@ -66,22 +69,16 @@ const Roulette: React.FC = () => {
     }, 4000);
   };
 
-
   const generateConicGradient = () => {
-    const prizeKeys = Object.keys(PRIZES);
-    const slicePercentage = 100 / prizeKeys.length;
+    const slicePercentage = 100 / PRIZES.length;
 
-    let gradientParts = [];
-    const prizeValues = Object.values(PRIZES);
+    let gradientParts: string[] = [];
 
-    for (let i = 0; i < prizeKeys.length; i++) {
-      // Accedemos a la nueva propiedad color
-      const color = prizeValues[i].color;
-
+    for (let i = 0; i < PRIZES.length; i++) {
       const start = slicePercentage * i;
       const end = slicePercentage * (i + 1);
 
-      gradientParts.push(`${color} ${start}% ${end}%`);
+      gradientParts.push(`${PRIZES[i].color} ${start}% ${end}%`);
     }
 
     return `conic-gradient(${gradientParts.join(', ')})`;
@@ -111,13 +108,13 @@ const Roulette: React.FC = () => {
                 position: 'relative'
               }}
             >
-              {Object.keys(PRIZES).map((name, i) => {
-                const sliceAngle = 360 / Object.keys(PRIZES).length;
+              {PRIZES.map((prize, i) => {
+                const sliceAngle = 360 / PRIZES.length;
                 const textRotation = (i * sliceAngle) + (sliceAngle / 2);
 
                 return (
                   <div
-                    key={name}
+                    key={i}
                     style={{
                       position: 'absolute',
                       top: '50%',
@@ -129,21 +126,14 @@ const Roulette: React.FC = () => {
                       whiteSpace: 'nowrap'
                     }}
                   >
-                    {name}
+                    {prize.name}
                   </div>
                 );
               })}
             </div>
           </div>
-
-
-
-
         </button>
-
       </div>
-
-
     </div>
   );
 };
