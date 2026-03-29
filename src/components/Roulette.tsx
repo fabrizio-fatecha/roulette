@@ -4,13 +4,13 @@ import confetti from 'canvas-confetti';
 
 const PRIZES = [
   { name: "Stickers", color: '#c3ecf6', prob: 15 },
-  { name: "Stickers", color: '#ffe7a5', prob: 15 },
+  { name: "Stickers", color: '#ffe7a5', prob: 18 },
   { name: "Stickers", color: '#f8d8d8', prob: 20 },
   { name: "Stickers", color: '#ccf6c5', prob: 20 },
   { name: "Stickers", color: '#c3ecf6', prob: 20 },
-  { name: "Remera", color: '#ffe7a5', prob: 5 },
+  { name: "Remera", color: '#ffe7a5', prob: 2 },
   { name: "Creditos", color: '#f8d8d8', prob: 0.5 },
-  { name: "Termito", color: '#ccf6c5', prob: 3 }
+  { name: "Termito", color: '#ccf6c5', prob: 5 }
 ];
 
 const Roulette: React.FC = () => {
