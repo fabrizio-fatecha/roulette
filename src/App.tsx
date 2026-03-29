@@ -5,7 +5,7 @@ function App() {
     <div
       style={{
         width: '100%',
-        height: '80vh',
+        height: '75vh',
         backgroundImage: `url('/fondo.png')`, 
         backgroundSize: 'contain',
         backgroundRepeat: 'no-repeat',

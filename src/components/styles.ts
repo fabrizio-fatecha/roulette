@@ -11,8 +11,8 @@ export const styles = {
   },
   rouletteWrapper: {
     position: 'relative' as const,
-    width: '40vw',
-    height: '40vw',
+    width: '250px',
+    height: '250px',
     maxWidth: '320px',
     maxHeight: '320px',
     minWidth: '200px',
@@ -44,7 +44,7 @@ export const styles = {
   button: {
     marginTop: '40px',
     padding: '12px 32px',
-    fontSize: '18px',
+    fontSize: '14px',
     fontFamily: '"Google Sans Medium", sans-serif', // Subhead [2]
     color: '#fff',
     backgroundColor: '#4285F4', // Blue 500 para llamadas a la acción [1]
